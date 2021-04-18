@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON
-      - run: cmake --build
+      - run: cmake . --build
