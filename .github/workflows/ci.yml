@@ -3,13 +3,25 @@ on: [push, pull_request]
 
 jobs:
   linux:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build .
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build .
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build .
+      - uses: actions/upload-artifact@v2
+        with:
+          path: example\Release\svg2png.exe
