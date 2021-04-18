@@ -4,24 +4,27 @@ on: [push, pull_request]
 jobs:
   linux:
     runs-on: ubuntu-latest
+    env:
+      CC: gcc-10
+      CXX: g++-10
     steps:
       - uses: actions/checkout@v2
-      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON
       - run: cmake --build .
 
   macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON
       - run: cmake --build .
 
   windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+      - run: cmake . -DLUNASVG_BUILD_EXAMPLES=ON
       - run: cmake --build .
       - uses: actions/upload-artifact@v2
         with:
-          path: example\Release\svg2png.exe
+          path: example\*\svg2png.exe
